@@ -1,0 +1,3 @@
+Group 2 consists of Diego Acevedo, Arin DeLoatch and Geoffrey Fadera
+The application being used is called the Conversational Companion
+Conversational Companion is trained on the SQuAD dataset and has RAG capability 
