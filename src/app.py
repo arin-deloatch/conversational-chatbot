@@ -1,49 +1,45 @@
 import streamlit as st
 import torch
-from transformers import BartForConditionalGeneration, BartTokenizer
-'''
-TODO: 
-1. Add model and tokenizer caching mechanisms to prevent OOM kills
-2. Update interface to resemble that of a constant dialogue between user and system
-3. Replace BART with fine-tuned BART
+from transformers import DistilBertTokenizer, DistilBertForQuestionAnswering
+from transformers import pipeline
 
-'''
 
-class ConversationalCompanion:
+class QACompanion:
     def __init__(self, MODEL_PATH: str, TOKENIZER_PATH: str) -> None:
-        self.title = 'Conversational Companion 🤖'
-        try:
-            self.model = BartForConditionalGeneration.from_pretrained(MODEL_PATH)
-            self.tokenizer = BartTokenizer.from_pretrained(TOKENIZER_PATH)
-        except Exception as e:
-            st.error(f"Error loading model/tokenizer: {e}")
+        self.title = 'QA Companion 🤖'
+        self.model = DistilBertForQuestionAnswering.from_pretrained(MODEL_PATH)
+        self.tokenizer = DistilBertTokenizer.from_pretrained(TOKENIZER_PATH)
+      
         
-    def generate_answer(self, question: str):
-        input_text = f"question: {question}"
+    def generate_answer(self, question: str, context:str):
         try:
-            inputs = self.tokenizer(input_text, return_tensors='pt', padding=True, truncation=True, max_length=512)
-            outputs = self.model.generate(inputs['input_ids'], max_length=50, num_beams=5, early_stopping=True)
-            answer = self.tokenizer.decode(outputs[0], skip_special_tokens=True)
-            return answer
+            question_answerer = pipeline("question-answering", model=self.model,
+                                         tokenizer=self.tokenizer)
+            question_answerer(question=question, context=context)
         except Exception as e:
             return f"Error generating answer: {e}"
     
     def app(self) -> None:
         st.title(self.title)
 
-        question = st.text_input("Ask Conversational Companion a question:")
+        question = st.text_input("Ask QA Companion a question:")
+        context = st.text_input("Enter the context of your question:")
 
         if st.button("Generate Answer"):
             if question:
                 with st.spinner("Generating answer..."):
-                    answer = self.generate_answer(question)
+                    answer = self.generate_answer(question,context)
                     st.write("### Answer:")
                     st.write(answer)
             else:
                 st.warning("Please enter a question.")
 
+
 if __name__ == '__main__':
-    MODEL_PATH = 'facebook/bart-base'
-    TOKENIZER_PATH = 'facebook/bart-base'
-    bot = ConversationalCompanion(MODEL_PATH=MODEL_PATH, TOKENIZER_PATH=TOKENIZER_PATH)
+    '''
+    TODO: Replace the MODEL_PATH AND TOKENIZER_PATH with our fine-tuned model
+    '''
+    MODEL_PATH = 'distilbert-base-uncased'
+    TOKENIZER_PATH = 'distilbert-base-uncased'
+    bot = QACompanion(MODEL_PATH=MODEL_PATH, TOKENIZER_PATH=TOKENIZER_PATH)
     bot.app()
