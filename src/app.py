@@ -2,6 +2,10 @@ import streamlit as st
 import torch
 from transformers import BertTokenizer, BertForQuestionAnswering
 from transformers import pipeline
+from dotenv import load_dotenv
+import os
+
+load_dotenv() 
 
 
 class QACompanion:
@@ -10,8 +14,11 @@ class QACompanion:
         self.model = BertForQuestionAnswering.from_pretrained(MODEL_PATH)
         self.tokenizer = BertTokenizer.from_pretrained(TOKENIZER_PATH)
 
+        HF_ACCESS_TOKEN = os.environ.get('HF_ACCESS_TOKEN')
+
         self.qa = pipeline("question-answering", model=self.model,
-                                         tokenizer=self.tokenizer)
+                                         tokenizer=self.tokenizer,
+                                         token=os.environ.get('HF_ACCESS_TOKEN'))
         
     def app(self) -> None:
         st.title(self.title)
@@ -30,10 +37,8 @@ class QACompanion:
 
 
 if __name__ == '__main__':
-    '''
-    TODO: Replace the MODEL_PATH AND TOKENIZER_PATH with our fine-tuned model
-    '''
-    MODEL_PATH = 'google-bert/bert-base-uncased'
-    TOKENIZER_PATH = 'google-bert/bert-base-uncased'
+    MODEL_PATH = 'pseoul/bert-cased-qa-companion'
+    TOKENIZER_PATH = 'pseoul/bert-cased-qa-companion'
     bot = QACompanion(MODEL_PATH=MODEL_PATH, TOKENIZER_PATH=TOKENIZER_PATH)
     bot.app()
+    
