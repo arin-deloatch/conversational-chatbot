@@ -1,22 +1,29 @@
-# Conversational Chatbot
+# QA Companion
+
+### Built With Python 3.12
 
 This repository contains the final project for Natural Language Processing and Generative AI (AAI-520), where our team designed and implemented a generative-based chatbot using state-of-the-art deep learning architectures.
 
-## Project Goal
+<!-- Project Goal -->
+### Project Goal
 The aim of this project is to build a chatbot capable of multi-turn conversations, adapting to context, and handling a wide range of topics. The final product includes a web or app interface where users can interact with the chatbot.
 
-## Key Components:
-**Research Phase**:
-- Studied architectures such as Seq2Seq, Transformers, and GPT.
-- Explored key challenges like context management and query ambiguity.
-  
-**Data Collection & Preprocessing**:
-- Utilized datasets like Cornell Movie Dialogs, Stanford QA, or Ubuntu Dialogue Corpus.
-- Preprocessed the data (tokenization, context management, etc.).
+<!-- Installation and Running the Project -->
+### Installation and Running the Project
+1. Clone the repo 
+   ```
+   git clone https://github.com/arin-deloatch/conversational-chatbot.git
+    ```
+   
+2. Ensure the necessary packages are installed via your package manager (pip, anaconda,etc.) and import the modules into your python/notebook file. 
+    ```
+   pip install -r /path/to/requirements.txt
+     ```
+<!-- Data -->
+### Data
+The QA companion was trained on the Stanford Question Answering Dataset (SQuAD) and uses a BERT-based architecture to understand and extract answers from textual inputs. 
 
-**Model Design & Training**:
-- Built and trained models based on deep learning frameworks (e.g., TensorFlow or PyTorch).
-- Implemented or adapted Transformer-based models for chatbot training.
+<!-- LICENSE -->
+### License
 
-**Evaluation**:
-- Used evaluation metrics to assess model performance.
+Distributed under the Apache 2.0 License. See `LICENSE.txt` for more information.
