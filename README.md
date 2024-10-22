@@ -19,6 +19,15 @@ The aim of this project is to build a chatbot capable of multi-turn conversation
     ```
    pip install -r /path/to/requirements.txt
      ```
+<!-- Installation and Running the Web App -->
+### Running the web application
+
+1. Traverse to the source directory and run the following command
+   ```
+   cd src
+   streamlit run app.py
+    ```
+   
 <!-- Data -->
 ### Data
 The QA companion was trained on the Stanford Question Answering Dataset (SQuAD) and uses a BERT-based architecture to understand and extract answers from textual inputs. 
