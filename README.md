@@ -1,4 +1,4 @@
-# QA Companion
+# QA Companion: Generative AI Chatbot
 
 ### Built With Python 3.12
 
